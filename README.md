@@ -1,10 +1,10 @@
-HPC-AI C++ Project
-==================
+C++ Examples
+============
 
-shell
------
+docs
+----
 
-Contains help about the shell interpreter.
+Contains help about the shell interpreter and GIT.
 
 progs
 -----

@@ -1,0 +1,110 @@
+== GIT Workflow ==
+
+For adding a feature or fixing a bug the following should be done:
+
+*    Create a feature branch and name it <branch_name>_keyword
+*    Commit changes
+*    Fetch changes from origin
+*    Synchronize your branch with master
+*    Clean your commit history and add a reference to bug
+*    Push feature branch to origin
+*    Assign someone for code review
+
+=== Create a feature branch ===
+
+{{{
+git checkout -b <branch_name>
+}}}
+
+=== Checkout file from other branch if necessary ===
+
+{{{
+git checkout <branch_name> -- <paths>
+}}}
+
+=== Synchronize feature branch with master ===
+
+{{{
+git checkout <my_branch_name>
+git pull --rebase origin master
+}}}
+
+=== Cleanup commit history before merge ===
+
+WARNING: Don't cleanup history if more than one person works on the branch!
+
+Find the number of last commits to be reordered with
+
+{{{
+git log
+}}}
+
+Then
+
+{{{
+git rebase -i HEAD~n
+}}}
+with n the number of commits to be treated (until now nothing is modified), or until the commit with given hash.
+
+{{{
+git rebase -i hash
+}}}
+
+Use the following commands to change to first keyword
+
+{{{
+# Commands:
+#  p, pick = use commit
+#  r, reword = use commit, but edit the commit message
+#  e, edit = use commit, but stop for amending
+#  s, squash = use commit, but meld into previous commit
+#  f, fixup = like "squash", but discard this commit's log message
+#  x, exec = run command (the rest of the line) using shell
+}}}
+
+Using squash ('s') merges commits together.
+
+Possibly use this command to change the last commit message
+
+{{{
+git commit --amend
+}}}
+
+=== Cleanup master branch locally ===
+
+{{{
+git pull --rebase origin master
+git reset --hard
+}}}
+
+=== Fetch all the branches from the origin ===
+
+{{{
+git fetch --all
+}}}
+
+=== Pick specific commits from any branch ===
+
+{{{
+git cherry-pick <commit_hash>
+}}}
+
+=== Remove untracked files from working directory ===
+
+{{{
+git clean -f -d 
+}}}
+
+=== Adding a reference to a bug ===
+
+Add a keyword and the ID in the commit message, like:
+
+{{{
+git commit -m "This is nice commit message, <keyword> #ID" 
+}}}
+
+with ID the number of the bug or feature in the tracker and the <keyword>:
+
+*    for simple references: refs, references, IssueID
+*    for closing directives: fixes, closes
+
